@@ -1,0 +1,8 @@
+version: "3"
+
+tasks:
+  comp:
+    desc: "Compile all java files"
+    cmds:
+      - javac ./**/*.java
+# 実行はjava <.classファイルの名前> でいける
