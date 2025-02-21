@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>JavaScriptによるDOM操作のテスト3</title>
+<script type="text/javascript">
+function addLine() {
+  var line = document.getElementById("originalline");
+  var newLine = line.cloneNode(true);
+  newLine.removeAttribute("id");
+  var tBody = document.getElementById("tablebody");
+  tBody.appendChild(newLine);
+  renumber(tBody);
+}
+
+function deleteLine(elem) {
+  var tBody = document.getElementById("tablebody");
+  tBody.removeChild(elem.parentNode.parentNode);
+  renumber(tBody);
+}
+
+function renumber(tBody) {
+  var number = 0;
+  for (var i = 0; i < tBody.childNodes.length; i++) {
+    var node = tBody.childNodes[i];
+    if (node.nodeType == Node.ELEMENT_NODE
+        && node.tagName.toLowerCase() == "tr") {
+      var nameInput = node.getElementsByClassName("nameinput")[0];
+      nameInput.setAttribute("name", "nameinput" + number);
+      var addressInput = node.getElementsByClassName("addressinput")[0];
+      addressInput.setAttribute("name", "addressinput" + number);
+      number++;
+    }
+  }
+}
+</script>
+</head>
+<body>
+<div style="display:none">
+<!-- コピー元として1行分を隠しておく -->
+<table>
+<tr id="originalline" class="inputline">
+  <td><input type="text" size="20" class="nameinput"></td>
+  <td><input type="text" size="40" class="addressinput"></td>
+  <td><button type="button" onclick="deleteLine(this)">削除</button></td>
+</tr>
+</table>
+</div>
+<form action="dummy.cgi" method="POST">
+<table>
+<thead>
+<tr><th>氏名</th><th>住所</th><th></th></tr>
+</thead>
+<tfoot>
+<tr>
+  <td colspan="3" align="right">
+    <button type="button" onclick="addLine();">1行追加</button>
+  </td>
+</tr>
+</tfoot>
+<tbody id="tablebody">
+</tbody>
+</table>
+</form>
+<script type="text/javascript">
+addLine();
+addLine();
+addLine();
+</script>
+</body>
+</html>

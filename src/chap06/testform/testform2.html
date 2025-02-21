@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>JavaScriptによるDOM操作のテスト2</title>
+<script type="text/javascript">
+var count = 0;
+
+function showDOM(node) {
+  count++;
+  if (count > 1000) {
+    return;
+  }
+  document.write("<li>" + node.toString());
+  var children = node.childNodes;
+  document.write("<ul>");
+  for (var i = 0; i < children.length; i++) {
+    showDOM(children[i]);
+  }
+  document.write("</ul>");
+}
+</script>
+</head>
+<body>
+<form action="dummy.cgi" method="POST">
+<table>
+<thead>
+  <tr><th>氏名</th><th>住所</th><th></th></tr>
+</thead>
+<tfoot>
+<tr>
+  <td colspan="3" align="right">
+    <button>1行追加</button>
+  </td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+  <td><input type="text" size="20"></td>
+  <td><input type="text" size="40"></td>
+  <td><button>削除</button></td>
+</tr>
+<tr>
+  <td><input type="text" size="20"></td>
+  <td><input type="text" size="40"></td>
+  <td><button>削除</button></td>
+</tr>
+<tr>
+  <td><input type="text" size="20"></td>
+  <td><input type="text" size="40"></td>
+  <td><button>削除</button></td>
+</tr>
+</tbody>
+</table>
+</form>
+<ul>
+<script type="text/javascript">
+showDOM(document);
+</script>
+</ul>
+</body>
+</html>
