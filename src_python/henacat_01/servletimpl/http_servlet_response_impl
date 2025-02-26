@@ -1,0 +1,38 @@
+from io import TextIOWrapper
+
+
+class HttpServletResponseImpl:
+    SC_OK = 200
+    SC_FOUND = 302
+
+    def __init__(self, output_stream):
+        self.contentType = "application/octet-stream"
+        self.characterEncoding = "ISO-8859-1"
+        self.outputStream = output_stream
+        self.printWriter = None
+        self.status = self.SC_OK
+        self.redirectLocation = None
+
+    def set_content_type(self, content_type):
+        self.contentType = content_type
+        parts = content_type.split(";")
+        if len(parts) > 1:
+            key_value = parts[1].split("=")
+            if len(key_value) == 2 and key_value[0].strip() == "charset":
+                self.set_character_encoding(key_value[1].strip())
+
+    def set_character_encoding(self, charset):
+        self.characterEncoding = charset
+
+    def get_writer(self):
+        self.printWriter = TextIOWrapper(
+            self.outputStream, encoding=self.characterEncoding
+        )
+        return self.printWriter
+
+    def send_redirect(self, location):
+        self.redirectLocation = location
+        self.set_status(self.SC_FOUND)
+
+    def set_status(self, sc):
+        self.status = sc
