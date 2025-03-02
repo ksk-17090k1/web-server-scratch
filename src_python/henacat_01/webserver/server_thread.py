@@ -1,10 +1,11 @@
-import os
-import socket
 import traceback
 from pathlib import Path
 
-from servletimpl import ServletService, WebApplication
-from util import Constants, MyURLDecoder, SendResponse, Util
+from servletimpl.servlet_service import ServletService
+from servletimpl.web_application import WebApplication
+from util.constants import Constants
+from util.my_url_decoder import MyURLDecoder
+from util.send_response import SendResponse
 
 DOCUMENT_ROOT = "C:\\Apache24\\htdocs"
 ERROR_DOCUMENT = "C:\\webserver\\error_document"

@@ -1,3 +1,4 @@
+import io
 import os
 import typing
 
@@ -7,7 +8,9 @@ from util import Util
 class SendResponse:
     @staticmethod
     def send_ok_response(
-        output_stream: typing.IO, file_input_stream: typing.IO, extension: str
+        output_stream: io.BufferedWriter,
+        file_input_stream: io.BufferedReader,
+        extension: str,
     ):
         Util.write_line(output_stream, "HTTP/1.1 200 OK")
         Util.write_line(output_stream, "Date: " + Util.get_date_string_utc())
@@ -22,7 +25,7 @@ class SendResponse:
             output_stream.write(chunk)
 
     @staticmethod
-    def send_move_permanently_response(output_stream: typing.IO, location):
+    def send_move_permanently_response(output_stream: io.BufferedWriter, location):
         Util.write_line(output_stream, "HTTP/1.1 301 Moved Permanently")
         Util.write_line(output_stream, "Date: " + Util.get_date_string_utc())
         Util.write_line(output_stream, "Server: Modoki/0.2")
@@ -31,7 +34,9 @@ class SendResponse:
         Util.write_line(output_stream, "")
 
     @staticmethod
-    def send_not_found_response(output_stream: typing.IO, error_document_root: str):
+    def send_not_found_response(
+        output_stream: io.BufferedWriter, error_document_root: str
+    ):
         Util.write_line(output_stream, "HTTP/1.1 404 Not Found")
         Util.write_line(output_stream, "Date: " + Util.get_date_string_utc())
         Util.write_line(output_stream, "Server: Modoki/0.2")

@@ -24,6 +24,7 @@ class HttpServletRequestImpl:
         ]
 
     def set_character_encoding(self, env):
+        """setter"""
         if not env:
             raise ValueError(f"Unsupported encoding: {env}")
         self.characterEncoding = env

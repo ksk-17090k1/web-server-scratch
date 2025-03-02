@@ -14,6 +14,7 @@ class HttpServletResponseImpl:
         self.redirectLocation = None
 
     def set_content_type(self, content_type):
+        """setter"""
         self.contentType = content_type
         parts = content_type.split(";")
         if len(parts) > 1:
@@ -22,6 +23,7 @@ class HttpServletResponseImpl:
                 self.set_character_encoding(key_value[1].strip())
 
     def set_character_encoding(self, charset):
+        """setter"""
         self.characterEncoding = charset
 
     def get_writer(self):
@@ -31,6 +33,7 @@ class HttpServletResponseImpl:
         return self.printWriter
 
     def send_redirect(self, location):
+        """setter"""
         self.redirectLocation = location
         self.set_status(self.SC_FOUND)
 

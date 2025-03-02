@@ -10,14 +10,19 @@ def main():
                 open("client_send.txt", "rb") as fis,
                 open("client_recv.txt", "wb") as fos,
             ):
-                # Send the contents of client_send.txt to the server
+                # client_send.txt の内容をサーバに送信
+                # NOTE: セイウチ演算子と、read()でseekが進むことを利用している。地味にすごい。
                 while ch := fis.read(1):
                     s.sendall(ch)
-                # Send zero to indicate the end
+
+                # サーバに送信終了を通知
+                # \x は16進数表記の文字を表す
                 s.sendall(b"\x00")
-                # Receive the response from the server and write to client_recv.txt
+
+                # サーバからのレスポンスを client_recv.txt に保存
                 while ch := s.recv(1):
                     fos.write(ch)
+
     except Exception as ex:
         print(ex)
 

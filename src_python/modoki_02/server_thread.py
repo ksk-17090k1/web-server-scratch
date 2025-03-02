@@ -1,3 +1,4 @@
+import io
 import logging
 import pathlib
 import threading
@@ -36,17 +37,15 @@ class ServerThread(threading.Thread):
         self.socket = client_socket
 
     def run(self):
-        output_stream: typing.IO | None = None
+        output_stream: io.BufferedWriter | None = None
         try:
-            # socketのIFとしてfile objectを作成
-            # "rb"なのでバイナリモードで読み込む
-            input_stream: typing.IO = self.socket.makefile("rb")
+            # socketのIFとしてバイナリのfile objectを作成
+            input_stream: io.BufferedReader = self.socket.makefile("rb")
             path: str | None = None
             ext: str | None = None
             host: str | None = None
 
             while True:
-                # １行読み込む
                 line = input_stream.readline().decode("utf-8").strip()
                 # 空文字の場合
                 if not line:
@@ -73,7 +72,7 @@ class ServerThread(threading.Thread):
                 path += "index.html"
                 ext = "html"
 
-            # "wb"なのでバイナリモードで書き込む
+            # バイナリで書き込むファイルオブジェクトを生成
             output_stream = self.socket.makefile("wb")
 
             # パスの検証

@@ -1,9 +1,10 @@
 import datetime
+import io
 
 
 class Util:
     @staticmethod
-    def write_line(output_stream, line: str) -> None:
+    def write_line(output_stream: io.BufferedWriter, line: str) -> None:
         # 改行コードがCRLFであることに注意
         # output_streamがバイナリモードなので、バイナリにencodingしてから書き込む
         output_stream.write((line + "\r\n").encode())
